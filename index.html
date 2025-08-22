@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            line-height: 1.5;
+            color: #333;
+            background: url('https://plus.unsplash.com/premium_photo-1667761634654-7fcf176434b8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YmFja2dyb3VuZHxlbnwwfHwwfHx8MA%3D%3D') no-repeat center center fixed;
+            background-size: cover;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff44;
+            border-radius: 5px;
+            backdrop-filter: blur(10px);
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"],
+        input[type="number"] {
+            width: 49%;
+            display: inline-block;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #ffffff;
+            border-radius: 4px;
+            outline: none;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"] {
+            margin-right: 5px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0ba2bd;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0b6b7a;
+            transform: scale3d(1.03, 1.03, 1);
+            transition: all 0.3s ease;
+        }
+
+        ul {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 0;
+            list-style-type: none;
+        }
+        li {
+            background-color: #ffffff44;
+            border-radius: 5px;
+            backdrop-filter: blur(10px);
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            color: black;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        #expense-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Expense Tracker</h1>
+    <form id="expense-form">
+        <input type="text" id="description" placeholder="Expense Description" required>
+        <input type="number" id="amount" placeholder="Amount" required>
+        <button type="submit">Add Expense</button>
+    </form>
+    <ul id="expense-list"></ul>
+    <div id="total-expense" style="text-align: center; margin-top: 20px; font-size: 1.2em; color: black;">
+        <strong>Total Expense: Rs. <span id="total-amount">0</span></strong>
+    </div>
+    <script>
+        const form = document.getElementById('expense-form');
+        const expenseList = document.getElementById('expense-list');
+        const totalAmount = document.getElementById('total-amount');
+
+        let total = 0;
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const description = document.getElementById('description').value;
+            const amount = document.getElementById('amount').value;
+
+            total += parseFloat(amount);
+            totalAmount.textContent = total.toFixed(2);
+
+            const listItem = document.createElement('li');
+            listItem.textContent = `Rs.${amount} for ${description}`;
+            expenseList.appendChild(listItem);
+            listItem.addEventListener('click', function() {
+                total -= parseFloat(amount);
+                totalAmount.textContent = total.toFixed(2);
+                expenseList.removeChild(listItem);
+            });
+
+            form.reset();
+        });
+    </script>
+</body>
+</html>
